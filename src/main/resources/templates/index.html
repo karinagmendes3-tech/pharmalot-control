@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>PharmaLot Control</title>
+</head>
+<body>
+<h1>PharmaLot Control</h1>
+<p>Sistema de acompanhamento de lotes produtivos.</p>
+
+<form action="/buscar" method="get">
+    <label>Digite a OP:</label>
+    <input type="text" name="op" placeholder="Ex.: OP12345" required>
+    <button type="submit">Buscar</button>
+</form>
+<div th:if="${etapas != null}">
+    <h2>Resultados para OP: <span th:text="${op}"></span></h2>
+
+    <table border="1">
+        <tr>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Etapa</th>
+            <th>Status</th>
+            <th>Observações</th>
+        </tr>
+
+        <tr th:each="etapa : ${etapas}">
+            <td th:text="${etapa.produto}"></td>
+            <td th:text="${etapa.quantidade}"></td>
+            <td th:text="${etapa.etapa}"></td>
+            <td th:text="${etapa.status}"></td>
+            <td th:text="${etapa.observacoes}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
