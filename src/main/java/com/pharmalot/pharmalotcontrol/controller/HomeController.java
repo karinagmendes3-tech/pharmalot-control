@@ -29,5 +29,4 @@ public class HomeController {
         model.addAttribute("etapas", etapas);
         model.addAttribute("op", op);
         return "index";
-    }
 }
