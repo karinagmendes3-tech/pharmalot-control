@@ -1,5 +1,4 @@
 package com.pharmalot.pharmalotcontrol.controller;
-
 import com.pharmalot.pharmalotcontrol.model.EtapaProducao;
 import com.pharmalot.pharmalotcontrol.service.EtapaService;
 import org.springframework.stereotype.Controller;
