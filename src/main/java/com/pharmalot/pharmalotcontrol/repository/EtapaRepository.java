@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface EtapaRepository extends JpaRepository<EtapaProducao, Long> {
 
-    List<EtapaProducao> findByOp(String op);
+    List<EtapaProducao> findByOpContainingIgnoreCase(String op);
 }

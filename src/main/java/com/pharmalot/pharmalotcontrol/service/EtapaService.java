@@ -16,6 +16,6 @@ public class EtapaService {
     }
 
     public List<EtapaProducao> buscarPorOp(String op) {
-        return etapaRepository.findByOpContainingIgnoreCase(op);
+        return etapaRepository.findByOp(op);
     }
 }
