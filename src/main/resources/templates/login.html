@@ -2,15 +2,18 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>PharmaLot Control</title>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
+<div class="login-container">
+        <img src="/images/logo.png" alt="Logo" class="logo">
     <h1>PharmaLot Control</h1>
-    <form method="post" action="/
-login">
-        <input type ="text" name="username" placeholder="Usuário">
-        <input type ="password" name="password" placeholder="Senha">
+    <form method="post" action="/login">
+        <input type ="text" name="username" placeholder="Usuário" required>
+        <input type ="password" name="password" placeholder="Senha" required>
         <button type="submit">Entrar</button>
     </form>
+</div>
 </body>
 </html>
