@@ -1,77 +1,60 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-<meta charset="UTF-8">
-<title>OPCENTER TEUTO</title>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #0b1f4d 40%, #f4f6fb 40%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-<link rel="stylesheet" href="/css/login.css">
-</head>
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
 
-<body>
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    text-align: center;
+    width: 350px;
+}
 
-<div class="login-container">
+.logo {
+    width: 160px;
+    max-width: 160px;
+    height: auto;
+    margin-bottom: 20px;
+}
 
-<!-- ESQUERDA -->
-<div class="login-panel">
+h1 {
+    color: #1a2b6d;
+    margin-bottom: 20px;
+}
 
-<div class="login-card">
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
 
-<img src="/images/logo.png" class="logo">
+button {
+    width: 100%;
+    padding: 12px;
+    background: #0033a0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-<div class="title">
-<span class="gray">OPCENTER</span>
-<span class="blue"> TEUTO</span>
-</div>
-
-<div class="subtitle">
-                     Sistema inteligente de acompanhamento produtivo
-</div>
-
-<form method="post" action="/login">
-
-<div class="input-group">
-<input type="text"
-name="username"
-placeholder="Usuário">
-</div>
-
-<div class="input-group">
-<input type="password"
-name="password"
-placeholder="Senha">
-</div>
-
-<button class="login-btn" type="submit">
-                                       Entrar
-</button>
-
-</form>
-
-</div>
-
-</div>
-
-<!-- DIREITA -->
-<div class="visual-panel">
-
-<div class="visual-overlay">
-
-<h1>
- Elegância.<br>
-            Controle.<br>
-                      Vigilância.
-</h1>
-
-<p>
- Plataforma visual inspirada na presença
- marcante dos pavões da TEUTO.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</body>
-</html>
+button:hover {
+    background: #001f66;
+}
