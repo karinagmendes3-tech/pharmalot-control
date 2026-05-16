@@ -57,4 +57,29 @@ button {
 
 button:hover {
     background: #001f66;
+
+    @media (max-width: 768px) {.login-container{flex-direction: column;}
+    .login-panel{
+        width: 100%;
+        height: 220px;
+        border-radius: 0 0 60px 60px;
+        padding: 30px;
+        text-align: center;
+    }
+    .login-panel::after {display:none;}
+    .left-content{text-align: center;
+    max-width: 100%;}
+    .left-content p{font-size: 14px;}
+    .login-card{
+        width: 90%;
+        max-width: 400px;
+        margin: -40px auto 30px auto;
+        position: relative;
+        z-index: 5;
+    }
+    .logo{width: 110px;}
+    h1{font-size: 28px;}
+    input{font-size: 16px;}
+    button{font-size: 18px;}
+    }
 }

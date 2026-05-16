@@ -101,7 +101,10 @@ header p {
 .card p {
     color: #666;
 }
-
+.card {
+    text-decoration: none;
+    color: inherit;
+}
 /* Responsividade */
 @media (max-width: 900px) {
     .dashboard {
