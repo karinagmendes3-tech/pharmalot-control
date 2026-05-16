@@ -58,22 +58,27 @@ button {
 button:hover {
     background: #001f66;
 
-    @media (max-width: 768px) {.login-container{flex-direction: column;}
+    @media (max-width: 768px) {.login-container{flex-direction: column;
+    min-height: 100vh;}
     .login-panel{
         width: 100%;
         height: 220px;
-        border-radius: 0 0 60px 60px;
-        padding: 30px;
+        border-radius: 0 0 45px 45px;
+        padding: 25px;
         text-align: center;
     }
     .login-panel::after {display:none;}
-    .left-content{text-align: center;
-    max-width: 100%;}
-    .left-content p{font-size: 14px;}
-    .login-card{
-        width: 90%;
-        max-width: 400px;
-        margin: -40px auto 30px auto;
+    .left-content{
+        color:white;
+        text-align: center;
+        max-width: 100%};
+    .left-content h2{font-size: 20px;
+    line-height: 1.3;}
+    left-content p {font-size: 14px;}
+        .login-card{
+        width: 88%;
+        max-width: 380px;
+        margin: -45px auto 30px auto;
         position: relative;
         z-index: 5;
     }
