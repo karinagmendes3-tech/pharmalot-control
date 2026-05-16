@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Equipamentos da Área</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+
+<div class="main-content">
+    <h1>Equipamentos da Área</h1>
+    <p>Selecione o equipamento desejado.</p>
+
+    <div class="cards-container">
+
+        <div th:each="equipamento : ${equipamentos}" class="card">
+            <h3 th:text="${equipamento.nome}">Nome</h3>
+            <p><strong>TAG:</strong> <span th:text="${equipamento.tag}"></span></p>
+            <p><strong>Status:</strong> <span th:text="${equipamento.status}"></span></p>
+
+            <a th:href="@{'/logbook/detalhes/' + ${equipamento.nome}}">
+                <button>Acessar Logbook</button>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
