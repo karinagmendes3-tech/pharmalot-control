@@ -21,6 +21,11 @@ public class HomeController {
     public String home() {
         return "index";
     }
+    @GetMapping("/producao")public String producao() {return "produção";}
+    @GetMapping("/equipamento")public String equipamento(){return "equipamentos";}
+    @GetMapping("/logbook")public String logbook(){return "logbook";}
+    @GetMapping("/historico")public String historico(){return "historico";}
+    @GetMapping("/relatorios")public String administracao(){return "administracao";}
 
     @GetMapping("/buscar")
     public String buscarOp(@RequestParam String op, Model model) {
