@@ -1,16 +1,10 @@
 spring:
   datasource:
-    url: jdbc:postgresql://dpg-d7sjph9kh4rs7394ia7g-a.ohio-postgres.render.com:5432/pharmalot_control
-    username: pharmalot_control_user
-    password: txRjiumxC4LN5MtICNcP03a6DLzSHhCg
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-server:
-  port: 8081
