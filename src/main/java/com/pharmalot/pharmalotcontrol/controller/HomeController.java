@@ -23,7 +23,7 @@ public class HomeController {
     public String home() {
         return "index";
     }
-    @GetMapping("/producao")public String producao(){return "produção";}
+    @GetMapping("/producao")public String producao(){return "producao";}
     @GetMapping("/equipamento")public String equipamento(){return "equipamentos";}
     @GetMapping("/logbook")public String logbook(Model model){List<Map<String, String>>areas=List.of(Map.of("nome","Pesagem","descricao","Box de pesagem","url","pesagem"),
             Map.of("nome","Manipulação","descricao","Misturagranulação e preparação","url","manipulacao"),

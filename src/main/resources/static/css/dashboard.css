@@ -127,4 +127,141 @@ header p {
     .content {
         padding: 20px;
     }
+    .production-card {
+        background: white;
+        border-radius: 18px;
+        padding: 28px;
+        margin-top: 28px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .production-card h2 {
+        color: #123f8c;
+        margin-top: 0;
+        margin-bottom: 25px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        color: #24344d;
+        margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 12px 14px;
+        border: 1px solid #d7dce5;
+        border-radius: 9px;
+        font-size: 15px;
+        background: white;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #1c55b5;
+        box-shadow: 0 0 0 3px rgba(28, 85, 181, 0.10);
+    }
+
+    .full-width {
+        margin-top: 22px;
+    }
+
+    .btn-primary {
+        margin-top: 22px;
+        background: #174ca7;
+        color: white;
+        border: none;
+        padding: 13px 24px;
+        border-radius: 9px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background: #123d88;
+    }
+
+    .table-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .search-box {
+        width: 250px;
+        padding: 10px 13px;
+        border: 1px solid #d7dce5;
+        border-radius: 8px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 14px;
+        border-bottom: 1px solid #e6e9ef;
+    }
+
+    th {
+        color: #183e78;
+        background: #f7f9fc;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .status-progress {
+        background: #e7f0ff;
+        color: #174ca7;
+    }
+
+    @media (max-width: 1000px) {
+        .form-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 700px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .table-title {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .search-box {
+            width: 100%;
+        }
+    }
 }
