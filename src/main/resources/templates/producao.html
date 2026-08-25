@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Produção - OPCENTER TEUTO</title>
@@ -8,155 +9,291 @@
 
 <body>
 
-<div class="sidebar">
+<div class="dashboard">
 
-    <div class="logo-area">
-        <img src="/images/logo.png" alt="OPCENTER TEUTO" class="sidebar-logo">
-        <h2>Opcenter</h2>
-    </div>
+    <!-- =========================
+         BARRA LATERAL
+    ========================== -->
+    <aside class="sidebar">
 
-    <nav>
-        <a href="/">Home</a>
-        <a href="/logbook">Logbook</a>
-        <a href="/producao" class="active">Produção</a>
-        <a href="/equipamento">Equipamentos</a>
-        <a href="/historico">Histórico</a>
-        <a href="/relatorios">Relatórios</a>
-        <a href="#">Administração</a>
-    </nav>
+        <div class="logo-area">
+            <img src="/images/logo.png"
+                 alt="OPCENTER TEUTO"
+                 class="sidebar-logo">
+
+            <h2>Opcenter</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="/">Home</a>
+            <a href="/logbook">Logbook</a>
+            <a href="/producao" class="active">Produção</a>
+            <a href="/equipamento">Equipamentos</a>
+            <a href="/historico">Histórico</a>
+            <a href="/relatorios">Relatórios</a>
+            <a href="#">Administração</a>
+        </nav>
+
+    </aside>
+
+
+    <!-- =========================
+         CONTEÚDO PRINCIPAL
+    ========================== -->
+    <main class="main-content">
+
+        <div class="page-header">
+            <h1>Produção</h1>
+
+            <p>
+                Acompanhamento e atualização do status dos lotes produtivos.
+            </p>
+        </div>
+
+
+        <!-- =========================
+             FORMULÁRIO
+        ========================== -->
+        <section class="production-card">
+
+            <h2>Atualizar status do lote</h2>
+
+            <form class="production-form">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="op">
+                            OP / Lote
+                        </label>
+
+                        <input
+                                type="text"
+                                id="op"
+                                name="op"
+                                placeholder="Digite a OP ou lote">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="produto">
+                            Produto
+                        </label>
+
+                        <input
+                                type="text"
+                                id="produto"
+                                name="produto"
+                                placeholder="Nome do produto">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="quantidade">
+                            Quantidade
+                        </label>
+
+                        <input
+                                type="text"
+                                id="quantidade"
+                                name="quantidade"
+                                placeholder="Quantidade produzida">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="etapa">
+                            Etapa atual
+                        </label>
+
+                        <select id="etapa" name="etapa">
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="Pesagem">
+                                Pesagem
+                            </option>
+
+                            <option value="Manipulação">
+                                Manipulação
+                            </option>
+
+                            <option value="Compressão">
+                                Compressão
+                            </option>
+
+                            <option value="Revestimento">
+                                Revestimento
+                            </option>
+
+                            <option value="Acondicionamento">
+                                Acondicionamento
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="status">
+                            Status
+                        </label>
+
+                        <select id="status" name="status">
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="Aguardando">
+                                Aguardando
+                            </option>
+
+                            <option value="Em andamento">
+                                Em andamento
+                            </option>
+
+                            <option value="Pausado">
+                                Pausado
+                            </option>
+
+                            <option value="Concluído">
+                                Concluído
+                            </option>
+
+                            <option value="Com desvio">
+                                Com desvio
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="dataHora">
+                            Data / Hora
+                        </label>
+
+                        <input
+                                type="datetime-local"
+                                id="dataHora"
+                                name="dataHora">
+                    </div>
+
+                </div>
+
+
+                <div class="form-group full-width">
+
+                    <label for="observacoes">
+                        Observações
+                    </label>
+
+                    <textarea
+                            id="observacoes"
+                            name="observacoes"
+                            rows="4"
+                            placeholder="Digite informações relevantes sobre o lote"></textarea>
+
+                </div>
+
+
+                <button
+                        type="submit"
+                        class="btn-primary">
+
+                    Salvar atualização
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- =========================
+             TABELA DE LOTES
+        ========================== -->
+        <section class="production-card table-card">
+
+            <div class="table-title">
+
+                <h2>
+                    Lotes em produção
+                </h2>
+
+                <input
+                        type="text"
+                        class="search-box"
+                        placeholder="Buscar OP ou produto">
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>OP / Lote</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Etapa</th>
+                        <th>Status</th>
+                        <th>Atualização</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                    <tr>
+
+                        <td>
+                            Exemplo
+                        </td>
+
+                        <td>
+                            Produto exemplo
+                        </td>
+
+                        <td>
+                            -
+                        </td>
+
+                        <td>
+                            Manipulação
+                        </td>
+
+                        <td>
+                            <span class="status status-progress">
+                                Em andamento
+                            </span>
+                        </td>
+
+                        <td>
+                            -
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 
-<main class="main-content">
-
-    <div class="page-header">
-        <h1>Produção</h1>
-        <p>Acompanhamento e atualização do status dos lotes produtivos.</p>
-    </div>
-
-    <section class="production-card">
-
-        <h2>Atualizar status do lote</h2>
-
-        <form class="production-form">
-
-            <div class="form-grid">
-
-                <div class="form-group">
-                    <label for="op">OP / Lote</label>
-                    <input type="text" id="op" name="op"
-                           placeholder="Digite a OP ou lote">
-                </div>
-
-                <div class="form-group">
-                    <label for="produto">Produto</label>
-                    <input type="text" id="produto" name="produto"
-                           placeholder="Nome do produto">
-                </div>
-
-                <div class="form-group">
-                    <label for="quantidade">Quantidade</label>
-                    <input type="text" id="quantidade" name="quantidade"
-                           placeholder="Quantidade produzida">
-                </div>
-
-                <div class="form-group">
-                    <label for="etapa">Etapa atual</label>
-
-                    <select id="etapa" name="etapa">
-                        <option value="">Selecione</option>
-                        <option value="Pesagem">Pesagem</option>
-                        <option value="Manipulação">Manipulação</option>
-                        <option value="Compressão">Compressão</option>
-                        <option value="Revestimento">Revestimento</option>
-                        <option value="Acondicionamento">Acondicionamento</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="status">Status</label>
-
-                    <select id="status" name="status">
-                        <option value="">Selecione</option>
-                        <option value="Aguardando">Aguardando</option>
-                        <option value="Em andamento">Em andamento</option>
-                        <option value="Pausado">Pausado</option>
-                        <option value="Concluído">Concluído</option>
-                        <option value="Com desvio">Com desvio</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="dataHora">Data / Hora</label>
-                    <input type="datetime-local" id="dataHora" name="dataHora">
-                </div>
-
-            </div>
-
-            <div class="form-group full-width">
-                <label for="observacoes">Observações</label>
-
-                <textarea id="observacoes"
-                          name="observacoes"
-                          rows="4"
-                          placeholder="Digite informações relevantes sobre o lote"></textarea>
-            </div>
-
-            <button type="submit" class="btn-primary">
-                Salvar atualização
-            </button>
-
-        </form>
-
-    </section>
-
-    <section class="production-card table-card">
-
-        <div class="table-title">
-            <h2>Lotes em produção</h2>
-
-            <input type="text"
-                   class="search-box"
-                   placeholder="Buscar OP ou produto">
-        </div>
-
-        <div class="table-wrapper">
-
-            <table>
-
-                <thead>
-                <tr>
-                    <th>OP / Lote</th>
-                    <th>Produto</th>
-                    <th>Etapa</th>
-                    <th>Status</th>
-                    <th>Atualização</th>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                <tr>
-                    <td>Exemplo</td>
-                    <td>Produto exemplo</td>
-                    <td>Manipulação</td>
-                    <td>
-                        <span class="status status-progress">
-                            Em andamento
-                        </span>
-                    </td>
-                    <td>-</td>
-                </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-</main>
-
 </body>
+
 </html>
