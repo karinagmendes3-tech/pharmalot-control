@@ -1,10 +1,171 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Administração - Controle de Lotes Opcenter</title>
+    <title>Administração - OPCENTER TEUTO</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
+
 <body>
-<h1>Administração</h1>
+
+<div class="dashboard">
+
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar">
+
+        <div class="logo-area">
+            <img src="/images/logo.png"
+                 alt="OPCENTER TEUTO"
+                 class="sidebar-logo">
+
+            <h2>Opcenter</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="/">Home</a>
+            <a href="/logbook">Logbook</a>
+            <a href="/producao">Produção</a>
+            <a href="/equipamento">Equipamentos</a>
+            <a href="/historico">Histórico</a>
+            <a href="/relatorios">Relatórios</a>
+            <a href="/administracao" class="active">Administração</a>
+        </nav>
+
+    </aside>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+
+        <div class="page-header">
+            <h1>Administração</h1>
+            <p>Gerenciamento da base de dados utilizada pelo sistema.</p>
+        </div>
+
+
+        <!-- MENSAGEM DE SUCESSO -->
+        <div th:if="${sucesso}"
+             class="alert-success"
+             th:text="${sucesso}">
+        </div>
+
+
+        <!-- MENSAGEM DE ERRO -->
+        <div th:if="${erro}"
+             class="alert-error"
+             th:text="${erro}">
+        </div>
+
+
+        <!-- CARD DE IMPORTAÇÃO -->
+        <section class="production-card">
+
+            <h2>Importar base de OPs e lotes</h2>
+
+            <p class="admin-description">
+                Importe a planilha contendo as OPs atualmente disponíveis.
+                Os dados serão utilizados para auxiliar o preenchimento
+                das informações na tela de Produção.
+            </p>
+
+
+            <form
+                    action="/administracao/importar"
+                    method="post"
+                    enctype="multipart/form-data"
+                    class="import-form">
+
+                <div class="form-group">
+
+                    <label for="arquivo">
+                        Arquivo Excel
+                    </label>
+
+                    <input
+                            type="file"
+                            id="arquivo"
+                            name="arquivo"
+                            accept=".xlsx"
+                            required>
+
+                </div>
+
+
+                <div class="file-info">
+
+                    <strong>Formato esperado da planilha:</strong>
+
+                    <div class="excel-columns">
+
+                        <span>OP</span>
+                        <span>LOTE</span>
+                        <span>PRODUTO</span>
+                        <span>ETAPA</span>
+
+                    </div>
+
+                    <p>
+                        A primeira linha da planilha deve conter os títulos
+                        das colunas. Os registros devem começar na segunda linha.
+                    </p>
+
+                </div>
+
+
+                <button
+                        type="submit"
+                        class="btn-primary">
+
+                    Importar base
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- INFORMAÇÕES -->
+        <section class="production-card">
+
+            <h2>Como funciona a base importada</h2>
+
+            <div class="admin-info-grid">
+
+                <div class="admin-info-card">
+                    <h3>1. Importação</h3>
+                    <p>
+                        A planilha com as OPs em andamento é importada
+                        para o banco de dados do sistema.
+                    </p>
+                </div>
+
+                <div class="admin-info-card">
+                    <h3>2. Consulta</h3>
+                    <p>
+                        Ao informar uma OP na tela de Produção,
+                        o sistema procura automaticamente os dados
+                        existentes na base.
+                    </p>
+                </div>
+
+                <div class="admin-info-card">
+                    <h3>3. Atualização manual</h3>
+                    <p>
+                        Caso a OP não exista na base importada,
+                        o usuário poderá preencher normalmente
+                        as informações do lote.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
 </body>
 </html>

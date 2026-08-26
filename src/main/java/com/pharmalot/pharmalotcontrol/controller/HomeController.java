@@ -232,8 +232,8 @@ public class HomeController {
     ===================================== */
 
     @GetMapping("/relatorios")
-    public String administracao() {
-        return "administracao";
+    public String relatorios() {
+        return "relatorios";
     }
 
 
