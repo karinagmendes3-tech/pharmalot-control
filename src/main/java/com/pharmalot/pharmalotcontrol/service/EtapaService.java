@@ -15,7 +15,18 @@ public class EtapaService {
         this.etapaRepository = etapaRepository;
     }
 
+    // Busca registros pela OP
     public List<EtapaProducao> buscarPorOp(String op) {
         return etapaRepository.findByOpContainingIgnoreCase(op);
+    }
+
+    // Salva uma atualização de produção no banco
+    public EtapaProducao salvar(EtapaProducao etapaProducao) {
+        return etapaRepository.save(etapaProducao);
+    }
+
+    // Lista todas as atualizações, começando pelas mais recentes
+    public List<EtapaProducao> listarTodos() {
+        return etapaRepository.findAllByOrderByDataHoraDesc();
     }
 }

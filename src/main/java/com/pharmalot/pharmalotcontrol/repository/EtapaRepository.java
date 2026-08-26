@@ -8,4 +8,6 @@ import java.util.List;
 public interface EtapaRepository extends JpaRepository<EtapaProducao, Long> {
 
     List<EtapaProducao> findByOpContainingIgnoreCase(String op);
+
+    List<EtapaProducao> findAllByOrderByDataHoraDesc();
 }

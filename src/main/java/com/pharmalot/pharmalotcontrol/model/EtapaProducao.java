@@ -1,6 +1,7 @@
 package com.pharmalot.pharmalotcontrol.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "etapa_producao")
@@ -12,7 +13,11 @@ public class EtapaProducao {
 
     private String op;
 
+    private String produto;
+
     private String etapa;
+
+    private String status;
 
     private String turno;
 
@@ -21,10 +26,14 @@ public class EtapaProducao {
     @Column(name = "quantidade_produzida")
     private Double quantidadeProduzida;
 
+    @Column(length = 2000)
     private String observacoes;
 
     @Column(name = "usuario_responsavel")
     private String usuarioResponsavel;
+
+    @Column(name = "data_hora")
+    private LocalDateTime dataHora;
 
     public EtapaProducao() {
     }
@@ -41,12 +50,28 @@ public class EtapaProducao {
         this.op = op;
     }
 
+    public String getProduto() {
+        return produto;
+    }
+
+    public void setProduto(String produto) {
+        this.produto = produto;
+    }
+
     public String getEtapa() {
         return etapa;
     }
 
     public void setEtapa(String etapa) {
         this.etapa = etapa;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getTurno() {
@@ -87,5 +112,13 @@ public class EtapaProducao {
 
     public void setUsuarioResponsavel(String usuarioResponsavel) {
         this.usuarioResponsavel = usuarioResponsavel;
+    }
+
+    public LocalDateTime getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 }
