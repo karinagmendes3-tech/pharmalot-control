@@ -15,12 +15,27 @@ public class OpBase {
     @Column(unique = true, nullable = false)
     private String op;
 
-    private String lote;
+    @Column(name = "status_op")
+    private String statusOp;
 
     private String produto;
 
-    @Column(name = "etapa_sistema")
-    private String etapaSistema;
+    @Column(name = "descricao_produto")
+    private String descricaoProduto;
+
+    private String lote;
+
+    @Column(name = "data_hora_criacao")
+    private LocalDateTime dataHoraCriacao;
+
+    @Column(name = "processo_atual")
+    private String processoAtual;
+
+    @Column(name = "status_processo")
+    private String statusProcesso;
+
+    @Column(name = "quantidade_desvios")
+    private Integer quantidadeDesvios;
 
     @Column(name = "data_importacao")
     private LocalDateTime dataImportacao;
@@ -40,12 +55,12 @@ public class OpBase {
         this.op = op;
     }
 
-    public String getLote() {
-        return lote;
+    public String getStatusOp() {
+        return statusOp;
     }
 
-    public void setLote(String lote) {
-        this.lote = lote;
+    public void setStatusOp(String statusOp) {
+        this.statusOp = statusOp;
     }
 
     public String getProduto() {
@@ -56,12 +71,52 @@ public class OpBase {
         this.produto = produto;
     }
 
-    public String getEtapaSistema() {
-        return etapaSistema;
+    public String getDescricaoProduto() {
+        return descricaoProduto;
     }
 
-    public void setEtapaSistema(String etapaSistema) {
-        this.etapaSistema = etapaSistema;
+    public void setDescricaoProduto(String descricaoProduto) {
+        this.descricaoProduto = descricaoProduto;
+    }
+
+    public String getLote() {
+        return lote;
+    }
+
+    public void setLote(String lote) {
+        this.lote = lote;
+    }
+
+    public LocalDateTime getDataHoraCriacao() {
+        return dataHoraCriacao;
+    }
+
+    public void setDataHoraCriacao(LocalDateTime dataHoraCriacao) {
+        this.dataHoraCriacao = dataHoraCriacao;
+    }
+
+    public String getProcessoAtual() {
+        return processoAtual;
+    }
+
+    public void setProcessoAtual(String processoAtual) {
+        this.processoAtual = processoAtual;
+    }
+
+    public String getStatusProcesso() {
+        return statusProcesso;
+    }
+
+    public void setStatusProcesso(String statusProcesso) {
+        this.statusProcesso = statusProcesso;
+    }
+
+    public Integer getQuantidadeDesvios() {
+        return quantidadeDesvios;
+    }
+
+    public void setQuantidadeDesvios(Integer quantidadeDesvios) {
+        this.quantidadeDesvios = quantidadeDesvios;
     }
 
     public LocalDateTime getDataImportacao() {
