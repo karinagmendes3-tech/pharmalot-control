@@ -5,11 +5,13 @@
     <title>Produção - Controle de Lotes Opcenter</title>
     <link rel="stylesheet" href="/css/dashboard.css">
 </head>
+
 <body>
 
 <div class="dashboard">
 
     <aside class="sidebar">
+
         <div class="logo-area">
             <img src="/images/logo.png" alt="Logo">
             <h2>Opcenter</h2>
@@ -24,21 +26,50 @@
             <a href="/relatorios">Relatórios</a>
             <a href="/administracao">Administração</a>
         </nav>
+
     </aside>
 
     <main class="content">
 
         <h1>Produção</h1>
-        <p>Busque uma OP para preencher automaticamente os dados disponíveis.</p>
+
+        <p>
+            Busque uma OP para preencher automaticamente os dados disponíveis.
+        </p>
+
+        <!-- MENSAGEM DE SUCESSO -->
+        <div th:if="${sucesso}" class="alert-success">
+            <span th:text="${sucesso}"></span>
+        </div>
+
+        <!-- ============================= -->
+        <!-- BUSCA DA OP -->
+        <!-- ============================= -->
 
         <form action="/producao/buscar" method="get">
-            <input type="text"
-                   name="numeroOp"
-                   placeholder="Digite o número da OP"
-                   required>
 
-            <button type="submit">Buscar OP</button>
+            <label for="buscaNumeroOp">
+                Número da OP
+            </label>
+
+            <input
+                    id="buscaNumeroOp"
+                    type="text"
+                    name="numeroOp"
+                    placeholder="Digite o número da OP"
+                    required
+            >
+
+            <button type="submit">
+                Buscar OP
+            </button>
+
         </form>
+
+
+        <!-- ============================= -->
+        <!-- RESULTADO DA BUSCA -->
+        <!-- ============================= -->
 
         <div th:if="${ordem != null}">
 
@@ -50,57 +81,185 @@
                 OP não encontrada. Preencha os dados manualmente.
             </p>
 
-            <form>
 
-                <label>OP</label>
-                <input type="text"
-                       th:value="${ordem.numeroOp}">
+            <!-- ============================= -->
+            <!-- FORMULÁRIO DE PRODUÇÃO -->
+            <!-- ============================= -->
 
-                <label>Código do Produto</label>
-                <input type="text"
-                       th:value="${ordem.codigoProduto}">
+            <form action="/producao/salvar" method="post">
 
-                <label>Descrição do Produto</label>
-                <input type="text"
-                       th:value="${ordem.descricaoProduto}">
+                <!-- DADOS DA OP -->
 
-                <label>Lote</label>
-                <input type="text"
-                       th:value="${ordem.lote}">
+                <h2>Dados da OP</h2>
 
-                <label>Status da OP</label>
-                <input type="text"
-                       th:value="${ordem.statusOp}">
+
+                <label for="numeroOp">
+                    OP
+                </label>
+
+                <input
+                        id="numeroOp"
+                        name="numeroOp"
+                        type="text"
+                        th:value="${ordem.numeroOp}"
+                        required
+                >
+
+
+                <label for="codigoProduto">
+                    Código do Produto
+                </label>
+
+                <input
+                        id="codigoProduto"
+                        name="codigoProduto"
+                        type="text"
+                        th:value="${ordem.codigoProduto}"
+                >
+
+
+                <label for="descricaoProduto">
+                    Descrição do Produto
+                </label>
+
+                <input
+                        id="descricaoProduto"
+                        name="descricaoProduto"
+                        type="text"
+                        th:value="${ordem.descricaoProduto}"
+                >
+
+
+                <label for="lote">
+                    Lote
+                </label>
+
+                <input
+                        id="lote"
+                        name="lote"
+                        type="text"
+                        th:value="${ordem.lote}"
+                >
+
+
+                <label for="statusOp">
+                    Status da OP
+                </label>
+
+                <input
+                        id="statusOp"
+                        name="statusOp"
+                        type="text"
+                        th:value="${ordem.statusOp}"
+                >
+
 
                 <hr>
 
+
+                <!-- ============================= -->
+                <!-- NOVA ETAPA -->
+                <!-- ============================= -->
+
                 <h2>Nova etapa produtiva</h2>
 
-                <label>Etapa</label>
-                <select>
-                    <option>Pesagem</option>
-                    <option>Manipulação</option>
-                    <option>Compressão</option>
-                    <option>Revestimento</option>
-                    <option>Acondicionamento</option>
+
+                <label for="etapa">
+                    Etapa
+                </label>
+
+                <select
+                        id="etapa"
+                        name="etapa"
+                        required
+                >
+
+                    <option value="Pesagem">
+                        Pesagem
+                    </option>
+
+                    <option value="Manipulação">
+                        Manipulação
+                    </option>
+
+                    <option value="Compressão">
+                        Compressão
+                    </option>
+
+                    <option value="Revestimento">
+                        Revestimento
+                    </option>
+
+                    <option value="Acondicionamento">
+                        Acondicionamento
+                    </option>
+
                 </select>
 
-                <label>Status do Processo</label>
-                <select>
-                    <option>Em andamento</option>
-                    <option>Concluído</option>
-                    <option>Abandonado</option>
-                    <option>Interrompido</option>
+
+                <label for="statusProcesso">
+                    Status do Processo
+                </label>
+
+                <select
+                        id="statusProcesso"
+                        name="statusProcesso"
+                        required
+                >
+
+                    <option value="Em andamento">
+                        Em andamento
+                    </option>
+
+                    <option value="Concluído">
+                        Concluído
+                    </option>
+
+                    <option value="Abandonado">
+                        Abandonado
+                    </option>
+
+                    <option value="Interrompido">
+                        Interrompido
+                    </option>
+
                 </select>
 
-                <label>Quantidade de Desvios</label>
-                <input type="number" value="0">
 
-                <label>Operador</label>
-                <input type="text">
+                <label for="quantidadeDesvios">
+                    Quantidade de Desvios
+                </label>
 
-                <label>Observação / Motivo</label>
-                <textarea></textarea>
+                <input
+                        id="quantidadeDesvios"
+                        name="quantidadeDesvios"
+                        type="number"
+                        min="0"
+                        value="0"
+                >
+
+
+                <label for="operador">
+                    Operador
+                </label>
+
+                <input
+                        id="operador"
+                        name="operador"
+                        type="text"
+                >
+
+
+                <label for="observacao">
+                    Observação / Motivo
+                </label>
+
+                <textarea
+                        id="observacao"
+                        name="observacao"
+                        rows="4"
+                ></textarea>
+
 
                 <button type="submit">
                     Salvar Registro

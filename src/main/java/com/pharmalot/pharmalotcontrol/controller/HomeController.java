@@ -3,17 +3,13 @@ package com.pharmalot.pharmalotcontrol.controller;
 import com.pharmalot.pharmalotcontrol.model.EtapaProducao;
 import com.pharmalot.pharmalotcontrol.service.EtapaService;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -38,77 +34,11 @@ public class HomeController {
 
 
     /* =====================================
-       PRODUÇÃO
-    ===================================== */
-
-    /* =====================================
-       SALVAR STATUS DO LOTE
-    ===================================== */
-
-    @PostMapping("/producao/salvar")
-    public String salvarProducao(
-
-            @RequestParam String op,
-
-            @RequestParam String produto,
-
-            @RequestParam Double quantidade,
-
-            @RequestParam String etapa,
-
-            @RequestParam String status,
-
-            @RequestParam(required = false)
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-            LocalDateTime dataHora,
-
-            @RequestParam(required = false)
-            String observacoes,
-
-            Principal principal) {
-
-        EtapaProducao registro = new EtapaProducao();
-
-        registro.setOp(op);
-
-        registro.setProduto(produto);
-
-        registro.setQuantidadeProduzida(quantidade);
-
-        registro.setEtapa(etapa);
-
-        registro.setStatus(status);
-
-        registro.setObservacoes(observacoes);
-
-
-        /* Se o usuário não informar data/hora,
-           o sistema usa automaticamente o momento atual */
-        if (dataHora == null) {
-            registro.setDataHora(LocalDateTime.now());
-        } else {
-            registro.setDataHora(dataHora);
-        }
-
-
-        /* Salva automaticamente quem fez a alteração */
-        if (principal != null) {
-            registro.setUsuarioResponsavel(principal.getName());
-        }
-
-
-        etapaService.salvar(registro);
-
-        return "redirect:/producao";
-    }
-
-
-    /* =====================================
        EQUIPAMENTOS
     ===================================== */
 
-    @GetMapping("/equipamento")
-    public String equipamento() {
+    @GetMapping("/equipamentos")
+    public String equipamentos() {
         return "equipamentos";
     }
 
@@ -165,18 +95,15 @@ public class HomeController {
 
     @GetMapping("/logbook/{area}")
     public String equipamentosPorArea(
-
             @PathVariable String area,
             Model model) {
 
         model.addAttribute("area", area);
 
-
         if (area.equals("manipulacao")) {
 
             model.addAttribute(
                     "equipamentos",
-
                     List.of(
 
                             Map.of(
@@ -200,7 +127,6 @@ public class HomeController {
                     List.of()
             );
         }
-
 
         return "logbook-equipamentos";
     }
@@ -227,12 +153,11 @@ public class HomeController {
 
 
     /* =====================================
-       BUSCAR OP
+       BUSCAR OP ANTIGA
     ===================================== */
 
     @GetMapping("/buscar")
     public String buscarOp(
-
             @RequestParam String op,
             Model model) {
 
@@ -240,7 +165,6 @@ public class HomeController {
                 etapaService.buscarPorOp(op);
 
         model.addAttribute("etapas", etapas);
-
         model.addAttribute("op", op);
 
         return "index";
