@@ -1,10 +1,116 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Histórico</title>
+    <title>Histórico - Controle de Lotes Opcenter</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
+
 <body>
-<h1>Histórico</h1>
+
+<div class="dashboard">
+
+    <aside class="sidebar">
+
+        <div class="logo-area">
+            <img src="/images/logo.png" alt="Logo">
+            <h2>Opcenter</h2>
+        </div>
+
+        <nav class="menu">
+            <a href="/">Home</a>
+            <a href="/logbook">Logbook</a>
+            <a href="/producao">Produção</a>
+            <a href="/equipamentos">Equipamentos</a>
+            <a href="/historico">Histórico</a>
+            <a href="/relatorios">Relatórios</a>
+            <a href="/administracao">Administração</a>
+        </nav>
+
+    </aside>
+
+    <main class="content">
+
+        <h1>Histórico de Produção</h1>
+
+        <p>
+            Consulte os registros de produção salvos no sistema.
+        </p>
+
+        <div th:if="${#lists.isEmpty(registros)}">
+            <p>Nenhum registro encontrado.</p>
+        </div>
+
+        <div th:if="${!#lists.isEmpty(registros)}">
+
+            <table>
+
+                <thead>
+                <tr>
+                    <th>Data / Hora</th>
+                    <th>OP</th>
+                    <th>Produto</th>
+                    <th>Lote</th>
+                    <th>Etapa</th>
+                    <th>Status</th>
+                    <th>Desvios</th>
+                    <th>Operador</th>
+                    <th>Observação / Motivo</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="registro : ${registros}">
+
+                    <td th:text="${#temporals.format(registro.dataHoraRegistro, 'dd/MM/yyyy HH:mm')}">
+                        Data
+                    </td>
+
+                    <td th:text="${registro.ordemProducao.numeroOp}">
+                        OP
+                    </td>
+
+                    <td th:text="${registro.ordemProducao.descricaoProduto}">
+                        Produto
+                    </td>
+
+                    <td th:text="${registro.ordemProducao.lote}">
+                        Lote
+                    </td>
+
+                    <td th:text="${registro.etapa}">
+                        Etapa
+                    </td>
+
+                    <td th:text="${registro.statusProcesso}">
+                        Status
+                    </td>
+
+                    <td th:text="${registro.quantidadeDesvios}">
+                        0
+                    </td>
+
+                    <td th:text="${registro.operador}">
+                        Operador
+                    </td>
+
+                    <td th:text="${registro.observacao}">
+                        Observação
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </main>
+
+</div>
+
 </body>
 </html>

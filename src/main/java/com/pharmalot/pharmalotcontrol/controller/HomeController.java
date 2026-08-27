@@ -136,12 +136,6 @@ public class HomeController {
        HISTÓRICO
     ===================================== */
 
-    @GetMapping("/historico")
-    public String historico() {
-        return "historico";
-    }
-
-
     /* =====================================
        RELATÓRIOS
     ===================================== */

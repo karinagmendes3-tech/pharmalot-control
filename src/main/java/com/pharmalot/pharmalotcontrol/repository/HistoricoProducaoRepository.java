@@ -10,4 +10,7 @@ public interface HistoricoProducaoRepository
 
     List<HistoricoProducao>
     findByOrdemProducaoIdOrderByDataHoraRegistroAsc(Long ordemProducaoId);
+
+    List<HistoricoProducao>
+    findAllByOrderByDataHoraRegistroDesc();
 }

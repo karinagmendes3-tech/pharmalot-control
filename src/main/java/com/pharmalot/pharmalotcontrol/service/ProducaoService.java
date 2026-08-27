@@ -28,8 +28,16 @@ public class ProducaoService {
         this.opBaseService = opBaseService;
     }
 
+
+    /* =====================================
+       BUSCAR OP
+    ===================================== */
+
     public Optional<OrdemProducao> buscarPorOp(String numeroOp) {
 
+        /*
+         * Primeiro procura a OP na tabela principal.
+         */
         Optional<OrdemProducao> ordemExistente =
                 ordemRepository.findByNumeroOp(numeroOp);
 
@@ -37,6 +45,11 @@ public class ProducaoService {
             return ordemExistente;
         }
 
+
+        /*
+         * Se ainda não existir na tabela principal,
+         * procura na base importada do OPCENTER.
+         */
         Optional<OpBase> opBase =
                 opBaseService.buscarPorOp(numeroOp);
 
@@ -47,11 +60,23 @@ public class ProducaoService {
             OrdemProducao ordem = new OrdemProducao();
 
             ordem.setNumeroOp(base.getOp());
+
             ordem.setCodigoProduto(base.getProduto());
-            ordem.setDescricaoProduto(base.getDescricaoProduto());
+
+            ordem.setDescricaoProduto(
+                    base.getDescricaoProduto()
+            );
+
             ordem.setLote(base.getLote());
-            ordem.setStatusOp(base.getStatusOp());
-            ordem.setDataCriacao(base.getDataHoraCriacao());
+
+            ordem.setStatusOp(
+                    base.getStatusOp()
+            );
+
+            ordem.setDataCriacao(
+                    base.getDataHoraCriacao()
+            );
+
             ordem.setOrigemDados("OPCENTER");
 
             return Optional.of(ordem);
@@ -60,9 +85,21 @@ public class ProducaoService {
         return Optional.empty();
     }
 
-    public OrdemProducao salvarOrdem(OrdemProducao ordem) {
+
+    /* =====================================
+       SALVAR OP
+    ===================================== */
+
+    public OrdemProducao salvarOrdem(
+            OrdemProducao ordem) {
+
         return ordemRepository.save(ordem);
     }
+
+
+    /* =====================================
+       REGISTRAR NOVA ETAPA
+    ===================================== */
 
     public HistoricoProducao registrarEtapa(
             OrdemProducao ordem,
@@ -72,21 +109,74 @@ public class ProducaoService {
             String operador,
             String observacao) {
 
-        HistoricoProducao historico = new HistoricoProducao();
+        HistoricoProducao historico =
+                new HistoricoProducao();
 
+        /*
+         * Vincula o registro à OP.
+         */
         historico.setOrdemProducao(ordem);
-        historico.setEtapa(etapa);
-        historico.setStatusProcesso(statusProcesso);
-        historico.setQuantidadeDesvios(quantidadeDesvios);
-        historico.setOperador(operador);
-        historico.setObservacao(observacao);
-        historico.setDataHoraRegistro(LocalDateTime.now());
 
-        return historicoRepository.save(historico);
+        /*
+         * Informações da nova etapa.
+         */
+        historico.setEtapa(etapa);
+
+        historico.setStatusProcesso(
+                statusProcesso
+        );
+
+        historico.setQuantidadeDesvios(
+                quantidadeDesvios
+        );
+
+        historico.setOperador(
+                operador
+        );
+
+        historico.setObservacao(
+                observacao
+        );
+
+        /*
+         * A data e hora são registradas
+         * automaticamente.
+         */
+        historico.setDataHoraRegistro(
+                LocalDateTime.now()
+        );
+
+        /*
+         * Salva o registro na tabela
+         * historico_producao.
+         */
+        return historicoRepository.save(
+                historico
+        );
     }
 
-    public List<HistoricoProducao> buscarHistorico(Long ordemId) {
+
+    /* =====================================
+       HISTÓRICO DE UMA OP
+    ===================================== */
+
+    public List<HistoricoProducao> buscarHistorico(
+            Long ordemId) {
+
         return historicoRepository
-                .findByOrdemProducaoIdOrderByDataHoraRegistroAsc(ordemId);
+                .findByOrdemProducaoIdOrderByDataHoraRegistroAsc(
+                        ordemId
+                );
+    }
+
+
+    /* =====================================
+       TODO O HISTÓRICO
+    ===================================== */
+
+    public List<HistoricoProducao> buscarTodoHistorico() {
+
+        return historicoRepository
+                .findAllByOrderByDataHoraRegistroDesc();
     }
 }
