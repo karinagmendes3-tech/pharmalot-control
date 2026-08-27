@@ -41,17 +41,6 @@ public class HomeController {
        PRODUÇÃO
     ===================================== */
 
-    @GetMapping("/producao")
-    public String producao(Model model) {
-
-        List<EtapaProducao> lotes = etapaService.listarTodos();
-
-        model.addAttribute("lotes", lotes);
-
-        return "producao";
-    }
-
-
     /* =====================================
        SALVAR STATUS DO LOTE
     ===================================== */
