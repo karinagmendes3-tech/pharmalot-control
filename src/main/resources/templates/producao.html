@@ -6,6 +6,7 @@
     <title>Produção - Controle de Lotes Opcenter</title>
 
     <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="/css/producao.css">
 </head>
 
 <body>
@@ -34,11 +35,12 @@
 
     <main class="content">
 
-        <h1>Produção</h1>
-
-        <p>
-            Registro e acompanhamento das Ordens de Produção.
-        </p>
+        <div class="page-header">
+            <h1>Produção</h1>
+            <p>
+                Registro e acompanhamento das Ordens de Produção.
+            </p>
+        </div>
 
 
         <!-- MENSAGEM DE SUCESSO -->
@@ -50,53 +52,70 @@
 
         <!-- MENSAGEM DE OP NÃO ENCONTRADA -->
 
-        <div th:if="${encontrada == false}">
-            <p>
-                OP não encontrada na base.
-                Preencha os dados manualmente.
-            </p>
+        <div th:if="${encontrada == false}" class="alert-warning">
+            OP não encontrada na base.
+            Preencha os dados manualmente.
         </div>
 
 
-        <!-- ============================= -->
-        <!-- DADOS DA OP -->
-        <!-- ============================= -->
+        <!-- ===================================== -->
+        <!-- CARD 1 - DADOS DA OP -->
+        <!-- ===================================== -->
 
-        <section>
+        <section class="production-card">
 
-            <h2>Dados da Ordem de Produção</h2>
+            <div class="card-header">
+                <h2>Dados da Ordem de Produção</h2>
+                <p>
+                    Informe o número da OP para consultar os dados disponíveis.
+                </p>
+            </div>
 
 
             <!-- BUSCA DA OP -->
 
-            <form action="/producao/buscar"
-                  method="get">
+            <form
+                    action="/producao/buscar"
+                    method="get"
+                    class="search-form"
+            >
 
-                <label for="numeroOpBusca">
-                    Número da OP
-                </label>
+                <div class="field search-field">
 
-                <input
-                        id="numeroOpBusca"
-                        name="numeroOp"
-                        type="text"
-                        th:value="${ordem != null ? ordem.numeroOp : ''}"
-                        placeholder="Digite o número da OP"
-                        required
+                    <label for="numeroOpBusca">
+                        Número da OP
+                    </label>
+
+                    <input
+                            id="numeroOpBusca"
+                            name="numeroOp"
+                            type="text"
+                            th:value="${ordem != null ? ordem.numeroOp : ''}"
+                            placeholder="Ex.: 599029"
+                            required
+                    >
+
+                </div>
+
+                <button
+                        type="submit"
+                        class="btn-primary search-button"
                 >
-
-                <button type="submit">
                     Buscar OP
                 </button>
 
             </form>
 
 
+            <!-- ===================================== -->
             <!-- FORMULÁRIO DE SALVAMENTO -->
+            <!-- ===================================== -->
 
-            <form action="/producao/salvar"
-                  method="post">
-
+            <form
+                    action="/producao/salvar"
+                    method="post"
+                    class="production-form"
+            >
 
                 <!-- Mantém a OP encontrada -->
 
@@ -107,164 +126,234 @@
                 >
 
 
-                <label for="codigoProduto">
-                    Código do Produto
-                </label>
+                <!-- DADOS PRINCIPAIS -->
 
-                <input
-                        id="codigoProduto"
-                        name="codigoProduto"
-                        type="text"
-                        th:value="${ordem != null ? ordem.codigoProduto : ''}"
-                >
+                <div class="form-grid">
 
 
-                <label for="descricaoProduto">
-                    Descrição do Produto
-                </label>
+                    <div class="field">
 
-                <input
-                        id="descricaoProduto"
-                        name="descricaoProduto"
-                        type="text"
-                        th:value="${ordem != null ? ordem.descricaoProduto : ''}"
-                >
+                        <label for="codigoProduto">
+                            Código do Produto
+                        </label>
 
+                        <input
+                                id="codigoProduto"
+                                name="codigoProduto"
+                                type="text"
+                                th:value="${ordem != null ? ordem.codigoProduto : ''}"
+                                placeholder="Código do produto"
+                        >
 
-                <label for="lote">
-                    Lote
-                </label>
-
-                <input
-                        id="lote"
-                        name="lote"
-                        type="text"
-                        th:value="${ordem != null ? ordem.lote : ''}"
-                >
+                    </div>
 
 
-                <label for="statusOp">
-                    Status da OP
-                </label>
+                    <div class="field field-wide">
 
-                <input
-                        id="statusOp"
-                        name="statusOp"
-                        type="text"
-                        th:value="${ordem != null ? ordem.statusOp : ''}"
-                >
+                        <label for="descricaoProduto">
+                            Descrição do Produto
+                        </label>
 
+                        <input
+                                id="descricaoProduto"
+                                name="descricaoProduto"
+                                type="text"
+                                th:value="${ordem != null ? ordem.descricaoProduto : ''}"
+                                placeholder="Descrição do produto"
+                        >
 
-                <hr>
-
-
-                <!-- ============================= -->
-                <!-- NOVA ETAPA -->
-                <!-- ============================= -->
-
-                <h2>Nova etapa produtiva</h2>
+                    </div>
 
 
-                <label for="etapa">
-                    Etapa
-                </label>
+                    <div class="field">
 
-                <select
-                        id="etapa"
-                        name="etapa"
-                        required
-                >
+                        <label for="lote">
+                            Lote
+                        </label>
 
-                    <option value="Pesagem">
-                        Pesagem
-                    </option>
+                        <input
+                                id="lote"
+                                name="lote"
+                                type="text"
+                                th:value="${ordem != null ? ordem.lote : ''}"
+                                placeholder="Número do lote"
+                        >
 
-                    <option value="Manipulação">
-                        Manipulação
-                    </option>
-
-                    <option value="Compressão">
-                        Compressão
-                    </option>
-
-                    <option value="Revestimento">
-                        Revestimento
-                    </option>
-
-                    <option value="Acondicionamento">
-                        Acondicionamento
-                    </option>
-
-                </select>
+                    </div>
 
 
-                <label for="statusProcesso">
-                    Status do Processo
-                </label>
+                    <div class="field">
 
-                <select
-                        id="statusProcesso"
-                        name="statusProcesso"
-                        required
-                >
+                        <label for="statusOp">
+                            Status da OP
+                        </label>
 
-                    <option value="Em andamento">
-                        Em andamento
-                    </option>
+                        <input
+                                id="statusOp"
+                                name="statusOp"
+                                type="text"
+                                th:value="${ordem != null ? ordem.statusOp : ''}"
+                                placeholder="Status da OP"
+                        >
 
-                    <option value="Concluído">
-                        Concluído
-                    </option>
+                    </div>
 
-                    <option value="Abandonado">
-                        Abandonado
-                    </option>
-
-                    <option value="Interrompido">
-                        Interrompido
-                    </option>
-
-                </select>
+                </div>
 
 
-                <label for="quantidadeDesvios">
-                    Quantidade de Desvios
-                </label>
+                <!-- ===================================== -->
+                <!-- NOVA ETAPA PRODUTIVA -->
+                <!-- ===================================== -->
 
-                <input
-                        id="quantidadeDesvios"
-                        name="quantidadeDesvios"
-                        type="number"
-                        min="0"
-                        value="0"
-                >
+                <div class="section-divider"></div>
 
+                <div class="card-header secondary-header">
 
-                <label for="operador">
-                    Operador
-                </label>
+                    <h2>Nova etapa produtiva</h2>
 
-                <input
-                        id="operador"
-                        name="operador"
-                        type="text"
-                >
+                    <p>
+                        Registre a etapa atual e o status da produção.
+                    </p>
+
+                </div>
 
 
-                <label for="observacao">
-                    Observação / Motivo
-                </label>
-
-                <textarea
-                        id="observacao"
-                        name="observacao"
-                        rows="4"
-                ></textarea>
+                <div class="form-grid">
 
 
-                <button type="submit">
-                    Salvar Registro
-                </button>
+                    <div class="field">
+
+                        <label for="etapa">
+                            Etapa
+                        </label>
+
+                        <select
+                                id="etapa"
+                                name="etapa"
+                                required
+                        >
+
+                            <option value="Pesagem">
+                                Pesagem
+                            </option>
+
+                            <option value="Manipulação">
+                                Manipulação
+                            </option>
+
+                            <option value="Compressão">
+                                Compressão
+                            </option>
+
+                            <option value="Revestimento">
+                                Revestimento
+                            </option>
+
+                            <option value="Acondicionamento">
+                                Acondicionamento
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="statusProcesso">
+                            Status do Processo
+                        </label>
+
+                        <select
+                                id="statusProcesso"
+                                name="statusProcesso"
+                                required
+                        >
+
+                            <option value="Em andamento">
+                                Em andamento
+                            </option>
+
+                            <option value="Concluído">
+                                Concluído
+                            </option>
+
+                            <option value="Abandonado">
+                                Abandonado
+                            </option>
+
+                            <option value="Interrompido">
+                                Interrompido
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="quantidadeDesvios">
+                            Quantidade de Desvios
+                        </label>
+
+                        <input
+                                id="quantidadeDesvios"
+                                name="quantidadeDesvios"
+                                type="number"
+                                min="0"
+                                value="0"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="operador">
+                            Operador
+                        </label>
+
+                        <input
+                                id="operador"
+                                name="operador"
+                                type="text"
+                                placeholder="Nome do operador"
+                        >
+
+                    </div>
+
+
+                    <div class="field field-full">
+
+                        <label for="observacao">
+                            Observação / Motivo
+                        </label>
+
+                        <textarea
+                                id="observacao"
+                                name="observacao"
+                                rows="4"
+                                placeholder="Informe observações, motivo de interrupção, abandono ou outras informações relevantes."
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BOTÃO SALVAR -->
+
+                <div class="form-actions">
+
+                    <button
+                            type="submit"
+                            class="btn-primary save-button"
+                    >
+                        Salvar Registro
+                    </button>
+
+                </div>
 
             </form>
 
