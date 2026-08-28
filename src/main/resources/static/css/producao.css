@@ -4,40 +4,48 @@
     min-height: 100vh;
 }
 
-.content h1 {
+.page-header {
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
     margin: 0;
     color: #0d2b63;
     font-size: 34px;
     font-weight: 700;
 }
 
-.content > p {
+.page-header p {
     margin-top: 6px;
-    margin-bottom: 28px;
     color: #667085;
     font-size: 16px;
 }
 
-section {
+.production-card {
     background: #ffffff;
     border-radius: 18px;
     padding: 28px;
     box-shadow: 0 8px 28px rgba(16, 24, 40, 0.08);
-    max-width: 1050px;
+    max-width: 1100px;
 }
 
-section h2 {
-    margin-top: 0;
+.card-header {
     margin-bottom: 22px;
+}
+
+.card-header h2 {
+    margin: 0;
     color: #123b7a;
     font-size: 24px;
 }
 
-form {
-    margin-bottom: 24px;
+.card-header p {
+    margin-top: 6px;
+    color: #667085;
+    font-size: 15px;
 }
 
-form:first-of-type {
+.search-form {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 12px;
@@ -45,27 +53,40 @@ form:first-of-type {
     margin-bottom: 28px;
 }
 
-form:first-of-type label {
+.search-field {
+    width: 100%;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 2.2fr 1fr;
+    gap: 18px 22px;
+    align-items: end;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-wide {
+    grid-column: span 1;
+}
+
+.field-full {
     grid-column: 1 / -1;
 }
 
-form:nth-of-type(2) {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px 22px;
-}
-
-label {
-    display: block;
+.field label {
     margin-bottom: 6px;
     color: #344054;
     font-size: 14px;
     font-weight: 600;
 }
 
-input,
-select,
-textarea {
+.field input,
+.field select,
+.field textarea {
     width: 100%;
     box-sizing: border-box;
     padding: 12px 14px;
@@ -74,23 +95,45 @@ textarea {
     background: #ffffff;
     font-size: 15px;
     color: #101828;
-    transition: 0.2s ease;
 }
 
-input:focus,
-select:focus,
-textarea:focus {
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
     outline: none;
     border-color: #2457b2;
     box-shadow: 0 0 0 3px rgba(36, 87, 178, 0.12);
 }
 
-textarea {
+.field textarea {
     resize: vertical;
     min-height: 110px;
 }
 
-button {
+.section-divider {
+    height: 1px;
+    background: #eaecf0;
+    margin: 30px 0 24px;
+}
+
+.secondary-header {
+    grid-column: 1 / -1;
+    margin-bottom: 18px;
+}
+
+.secondary-header h2 {
+    margin-bottom: 4px;
+}
+
+.production-form {
+    display: block;
+}
+
+.production-form .form-grid {
+    margin-bottom: 22px;
+}
+
+.btn-primary {
     border: none;
     border-radius: 10px;
     padding: 12px 20px;
@@ -102,31 +145,26 @@ button {
     transition: 0.2s ease;
 }
 
-button:hover {
+.btn-primary:hover {
     background: #08367d;
 }
 
-hr {
-    grid-column: 1 / -1;
-    border: 0;
-    border-top: 1px solid #eaecf0;
-    margin: 8px 0 2px;
+.search-button {
+    min-width: 125px;
 }
 
-form:nth-of-type(2) h2 {
-    grid-column: 1 / -1;
-    margin: 6px 0 4px;
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
 }
 
-form:nth-of-type(2) button[type="submit"] {
-    grid-column: 2;
-    justify-self: end;
-    min-width: 180px;
-    margin-top: 8px;
+.save-button {
+    min-width: 220px;
 }
 
 .alert-success {
-    max-width: 1050px;
+    max-width: 1100px;
     margin-bottom: 20px;
     padding: 14px 18px;
     border-radius: 10px;
@@ -136,32 +174,60 @@ form:nth-of-type(2) button[type="submit"] {
     font-weight: 600;
 }
 
-@media (max-width: 900px) {
+.alert-warning {
+    max-width: 1100px;
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: #fffaeb;
+    border: 1px solid #fedf89;
+    color: #b54708;
+    font-weight: 600;
+}
 
-    .content {
-        padding: 24px 18px;
+@media (max-width: 1000px) {
+
+    .form-grid {
+        grid-template-columns: 1fr 1fr;
     }
 
-    section {
+    .field-full {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .content {
+        padding: 22px 16px;
+    }
+
+    .production-card {
         padding: 20px;
     }
 
-    form:first-of-type {
+    .search-form {
         grid-template-columns: 1fr;
     }
 
-    form:nth-of-type(2) {
+    .search-button {
+        width: 100%;
+    }
+
+    .form-grid {
         grid-template-columns: 1fr;
     }
 
-    form:nth-of-type(2) h2,
-    hr,
-    form:nth-of-type(2) button[type="submit"] {
+    .field-full,
+    .secondary-header {
         grid-column: 1;
     }
 
-    form:nth-of-type(2) button[type="submit"] {
+    .form-actions {
+        justify-content: stretch;
+    }
+
+    .save-button {
         width: 100%;
-        justify-self: stretch;
     }
 }
