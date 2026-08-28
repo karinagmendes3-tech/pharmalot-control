@@ -31,6 +31,15 @@ public class HistoricoProducao {
     @Column(name = "data_hora_registro")
     private LocalDateTime dataHoraRegistro;
 
+    @Column(name = "justificativa_supervisor", length = 2000)
+    private String justificativaSupervisor;
+
+    @Column(name = "supervisor_responsavel")
+    private String supervisorResponsavel;
+
+    @Column(name = "data_hora_justificativa")
+    private LocalDateTime dataHoraJustificativa;
+
     public HistoricoProducao() {
     }
 
@@ -92,5 +101,29 @@ public class HistoricoProducao {
 
     public void setDataHoraRegistro(LocalDateTime dataHoraRegistro) {
         this.dataHoraRegistro = dataHoraRegistro;
+    }
+
+    public String getJustificativaSupervisor() {
+        return justificativaSupervisor;
+    }
+
+    public void setJustificativaSupervisor(String justificativaSupervisor) {
+        this.justificativaSupervisor = justificativaSupervisor;
+    }
+
+    public String getSupervisorResponsavel() {
+        return supervisorResponsavel;
+    }
+
+    public void setSupervisorResponsavel(String supervisorResponsavel) {
+        this.supervisorResponsavel = supervisorResponsavel;
+    }
+
+    public LocalDateTime getDataHoraJustificativa() {
+        return dataHoraJustificativa;
+    }
+
+    public void setDataHoraJustificativa(LocalDateTime dataHoraJustificativa) {
+        this.dataHoraJustificativa = dataHoraJustificativa;
     }
 }

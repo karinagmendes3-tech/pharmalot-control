@@ -8,6 +8,16 @@
     <link rel="stylesheet" href="/css/dashboard.css">
 
     <style>
+
+        /* =========================================
+           TABELA
+        ========================================= */
+
+        .history-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
         .history-table {
             width: 100%;
             border-collapse: collapse;
@@ -28,6 +38,11 @@
             font-weight: 700;
         }
 
+
+        /* =========================================
+           FILTROS
+        ========================================= */
+
         .filter-select {
             display: block;
             width: 100%;
@@ -38,6 +53,11 @@
             background: white;
             font-size: 12px;
         }
+
+
+        /* =========================================
+           BARRA SUPERIOR
+        ========================================= */
 
         .history-toolbar {
             display: flex;
@@ -59,6 +79,36 @@
             background: #08367d;
         }
 
+
+        /* =========================================
+           MENSAGENS
+        ========================================= */
+
+        .message-success {
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: #ecfdf3;
+            border: 1px solid #abefc6;
+            color: #067647;
+            font-weight: 600;
+        }
+
+        .message-error {
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: #fef3f2;
+            border: 1px solid #fecdca;
+            color: #b42318;
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           STATUS
+        ========================================= */
+
         .status-abandonado {
             font-weight: 700;
             color: #b42318;
@@ -73,12 +123,136 @@
             font-weight: 700;
             color: #067647;
         }
+
+
+        /* =========================================
+           JUSTIFICATIVA DO SUPERVISOR
+        ========================================= */
+
+        .supervisor-column {
+            min-width: 300px;
+            width: 300px;
+        }
+
+        .supervisor-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .supervisor-textarea {
+            width: 100%;
+            min-height: 75px;
+            box-sizing: border-box;
+            resize: vertical;
+
+            padding: 9px 10px;
+
+            border: 1px solid #d0d5dd;
+            border-radius: 7px;
+
+            font-family: inherit;
+            font-size: 13px;
+
+            background: white;
+        }
+
+        .supervisor-textarea:focus {
+            outline: none;
+            border-color: #175cd3;
+        }
+
+        .supervisor-save-button {
+            align-self: flex-start;
+
+            border: none;
+            background: #0d47a1;
+            color: white;
+
+            padding: 8px 13px;
+            border-radius: 7px;
+
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .supervisor-save-button:hover {
+            background: #08367d;
+        }
+
+
+        /* =========================================
+           JUSTIFICATIVA JÁ REGISTRADA
+        ========================================= */
+
+        .justification-box {
+            background: #f8fafc;
+            border: 1px solid #e4e7ec;
+            border-radius: 8px;
+
+            padding: 10px;
+        }
+
+        .justification-text {
+            margin: 0 0 10px 0;
+            line-height: 1.4;
+            color: #344054;
+            white-space: pre-wrap;
+        }
+
+        .justification-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+
+            padding-top: 8px;
+            border-top: 1px solid #e4e7ec;
+
+            font-size: 11px;
+            color: #667085;
+        }
+
+        .edit-button {
+            margin-top: 9px;
+
+            border: 1px solid #0d47a1;
+            background: white;
+            color: #0d47a1;
+
+            padding: 6px 10px;
+            border-radius: 6px;
+
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .edit-button:hover {
+            background: #eff6ff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .not-applicable {
+            color: #98a2b3;
+            font-weight: 600;
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
 <div class="dashboard">
+
+    <!-- =========================================
+         MENU LATERAL
+    ========================================== -->
 
     <aside class="sidebar">
 
@@ -99,6 +273,11 @@
 
     </aside>
 
+
+    <!-- =========================================
+         CONTEÚDO
+    ========================================== -->
+
     <main class="content">
 
         <h1>Histórico de Produção</h1>
@@ -107,22 +286,64 @@
             Consulte e filtre os registros de produção salvos no sistema.
         </p>
 
+
+        <!-- =====================================
+             MENSAGENS
+        ====================================== -->
+
+        <div
+                th:if="${sucesso}"
+                class="message-success"
+                th:text="${sucesso}">
+        </div>
+
+        <div
+                th:if="${erro}"
+                class="message-error"
+                th:text="${erro}">
+        </div>
+
+
+        <!-- =====================================
+             BOTÃO LIMPAR FILTROS
+        ====================================== -->
+
         <div class="history-toolbar">
+
             <button
                     type="button"
                     class="clear-filters"
                     onclick="limparFiltros()">
+
                 Limpar filtros
+
             </button>
+
         </div>
+
+
+        <!-- =====================================
+             SEM REGISTROS
+        ====================================== -->
 
         <div th:if="${#lists.isEmpty(registros)}">
+
             <p>Nenhum registro encontrado.</p>
+
         </div>
 
-        <div th:if="${!#lists.isEmpty(registros)}">
 
-            <table class="history-table" id="historicoTabela">
+        <!-- =====================================
+             TABELA
+        ====================================== -->
+
+        <div
+                class="history-table-wrapper"
+                th:if="${!#lists.isEmpty(registros)}">
+
+            <table
+                    class="history-table"
+                    id="historicoTabela">
 
                 <thead>
 
@@ -130,122 +351,408 @@
 
                     <th>
                         Data / Hora
-                        <select class="filter-select" data-column="0">
+
+                        <select
+                                class="filter-select"
+                                data-column="0">
+
                             <option value="">Todos</option>
+
                         </select>
                     </th>
+
 
                     <th>
                         OP
-                        <select class="filter-select" data-column="1">
+
+                        <select
+                                class="filter-select"
+                                data-column="1">
+
                             <option value="">Todas</option>
+
                         </select>
                     </th>
+
 
                     <th>
                         Produto
-                        <select class="filter-select" data-column="2">
+
+                        <select
+                                class="filter-select"
+                                data-column="2">
+
                             <option value="">Todos</option>
+
                         </select>
                     </th>
+
 
                     <th>
                         Lote
-                        <select class="filter-select" data-column="3">
+
+                        <select
+                                class="filter-select"
+                                data-column="3">
+
                             <option value="">Todos</option>
+
                         </select>
                     </th>
+
 
                     <th>
                         Etapa
-                        <select class="filter-select" data-column="4">
+
+                        <select
+                                class="filter-select"
+                                data-column="4">
+
                             <option value="">Todas</option>
+
                         </select>
                     </th>
+
 
                     <th>
                         Status
-                        <select class="filter-select" data-column="5">
+
+                        <select
+                                class="filter-select"
+                                data-column="5">
+
                             <option value="">Todos</option>
+
                         </select>
                     </th>
+
 
                     <th>
                         Desvios
-                        <select class="filter-select" data-column="6">
+
+                        <select
+                                class="filter-select"
+                                data-column="6">
+
                             <option value="">Todos</option>
+
                         </select>
                     </th>
+
 
                     <th>
                         Operador
-                        <select class="filter-select" data-column="7">
+
+                        <select
+                                class="filter-select"
+                                data-column="7">
+
                             <option value="">Todos</option>
+
                         </select>
                     </th>
 
+
                     <th>
                         Observação / Motivo
-                        <select class="filter-select" data-column="8">
+
+                        <select
+                                class="filter-select"
+                                data-column="8">
+
                             <option value="">Todas</option>
+
                         </select>
+                    </th>
+
+
+                    <!-- NOVA COLUNA -->
+
+                    <th class="supervisor-column">
+                        Justificativa do Supervisor
                     </th>
 
                 </tr>
 
                 </thead>
 
+
                 <tbody>
 
                 <tr th:each="registro : ${registros}">
 
+
+                    <!-- DATA / HORA -->
+
                     <td
-                            th:text="${#temporals.format(registro.dataHoraRegistro, 'dd/MM/yyyy HH:mm')}">
+                            th:text="${#temporals.format(
+                                registro.dataHoraRegistro,
+                                'dd/MM/yyyy HH:mm'
+                            )}">
+
                         Data
+
                     </td>
+
+
+                    <!-- OP -->
 
                     <td
                             th:text="${registro.ordemProducao.numeroOp}">
+
                         OP
+
                     </td>
+
+
+                    <!-- PRODUTO -->
 
                     <td
                             th:text="${registro.ordemProducao.descricaoProduto}">
+
                         Produto
+
                     </td>
+
+
+                    <!-- LOTE -->
 
                     <td
                             th:text="${registro.ordemProducao.lote}">
+
                         Lote
+
                     </td>
+
+
+                    <!-- ETAPA -->
 
                     <td
                             th:text="${registro.etapa}">
+
                         Etapa
+
                     </td>
+
+
+                    <!-- STATUS -->
 
                     <td
                             th:text="${registro.statusProcesso}"
+
                             th:classappend="
                                 ${registro.statusProcesso == 'Abandonado'} ? 'status-abandonado' :
                                 (${registro.statusProcesso == 'Concluído'} ? 'status-concluido' :
                                 (${registro.statusProcesso == 'Em andamento'} ? 'status-andamento' : ''))">
+
                         Status
+
                     </td>
+
+
+                    <!-- DESVIOS -->
 
                     <td
                             th:text="${registro.quantidadeDesvios}">
+
                         0
+
                     </td>
+
+
+                    <!-- OPERADOR -->
 
                     <td
                             th:text="${registro.operador}">
+
                         Operador
+
                     </td>
+
+
+                    <!-- OBSERVAÇÃO / MOTIVO -->
 
                     <td
                             th:text="${registro.observacao}">
+
                         Observação
+
+                    </td>
+
+
+                    <!-- =====================================
+                         JUSTIFICATIVA DO SUPERVISOR
+                    ====================================== -->
+
+                    <td class="supervisor-column">
+
+
+                        <!-- =================================
+                             STATUS ABANDONADO
+                        ================================== -->
+
+                        <div
+                                th:if="${registro.statusProcesso == 'Abandonado'}">
+
+
+                            <!-- =============================
+                                 AINDA NÃO JUSTIFICADO
+                            ============================== -->
+
+                            <div
+                                    th:if="${registro.justificativaSupervisor == null
+                                    or #strings.isEmpty(registro.justificativaSupervisor)}">
+
+                                <form
+                                        th:action="@{/historico/justificar}"
+                                        method="post"
+                                        class="supervisor-form">
+
+                                    <input
+                                            type="hidden"
+                                            name="historicoId"
+                                            th:value="${registro.id}">
+
+
+                                    <textarea
+                                            name="justificativa"
+                                            class="supervisor-textarea"
+                                            placeholder="Digite a justificativa do supervisor..."
+                                            required></textarea>
+
+
+                                    <button
+                                            type="submit"
+                                            class="supervisor-save-button">
+
+                                        Salvar justificativa
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+
+                            <!-- =============================
+                                 JÁ JUSTIFICADO
+                            ============================== -->
+
+                            <div
+                                    th:if="${registro.justificativaSupervisor != null
+                                    and !#strings.isEmpty(registro.justificativaSupervisor)}">
+
+
+                                <!-- VISUALIZAÇÃO -->
+
+                                <div
+                                        class="justification-box"
+                                        th:id="'visualizacao-' + ${registro.id}">
+
+                                    <p
+                                            class="justification-text"
+                                            th:text="${registro.justificativaSupervisor}">
+                                    </p>
+
+
+                                    <div class="justification-meta">
+
+                                        <span
+                                                th:if="${registro.supervisorResponsavel != null}"
+                                                th:text="${'Supervisor: ' + registro.supervisorResponsavel}">
+                                        </span>
+
+
+                                        <span
+                                                th:if="${registro.dataHoraJustificativa != null}"
+                                                th:text="${'Registrado em: ' +
+                                                #temporals.format(
+                                                    registro.dataHoraJustificativa,
+                                                    'dd/MM/yyyy HH:mm'
+                                                )}">
+                                        </span>
+
+                                    </div>
+
+
+                                    <button
+                                            type="button"
+                                            class="edit-button"
+                                            th:onclick="'editarJustificativa(' + ${registro.id} + ')'">
+
+                                        Editar
+
+                                    </button>
+
+                                </div>
+
+
+                                <!-- =========================
+                                     FORMULÁRIO DE EDIÇÃO
+                                ========================== -->
+
+                                <form
+                                        th:action="@{/historico/justificar}"
+                                        method="post"
+                                        class="supervisor-form hidden"
+                                        th:id="'edicao-' + ${registro.id}">
+
+
+                                    <input
+                                            type="hidden"
+                                            name="historicoId"
+                                            th:value="${registro.id}">
+
+
+                                    <textarea
+                                            name="justificativa"
+                                            class="supervisor-textarea"
+                                            required
+                                            th:text="${registro.justificativaSupervisor}">
+                                    </textarea>
+
+
+                                    <div>
+
+                                        <button
+                                                type="submit"
+                                                class="supervisor-save-button">
+
+                                            Salvar alteração
+
+                                        </button>
+
+
+                                        <button
+                                                type="button"
+                                                class="edit-button"
+                                                th:onclick="'cancelarEdicao(' + ${registro.id} + ')'">
+
+                                            Cancelar
+
+                                        </button>
+
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- =================================
+                             OUTROS STATUS
+                        ================================== -->
+
+                        <span
+                                th:unless="${registro.statusProcesso == 'Abandonado'}"
+                                class="not-applicable">
+
+                            —
+
+                        </span>
+
                     </td>
 
                 </tr>
@@ -263,62 +770,98 @@
 
 <script>
 
-    document.addEventListener("DOMContentLoaded", function () {
+    /* =========================================
+       PREPARAR FILTROS
+    ========================================= */
 
-        const tabela = document.getElementById("historicoTabela");
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
 
-        if (!tabela) {
-            return;
-        }
+            const tabela =
+                document.getElementById("historicoTabela");
 
-        const linhas = tabela.querySelectorAll("tbody tr");
-        const filtros = tabela.querySelectorAll(".filter-select");
+            if (!tabela) {
+                return;
+            }
 
-        filtros.forEach(function (filtro) {
+            const linhas =
+                tabela.querySelectorAll("tbody tr");
 
-            const coluna = parseInt(filtro.dataset.column);
+            const filtros =
+                tabela.querySelectorAll(".filter-select");
 
-            const valores = new Set();
 
-            linhas.forEach(function (linha) {
+            filtros.forEach(function (filtro) {
 
-                const celula = linha.cells[coluna];
+                const coluna =
+                    parseInt(filtro.dataset.column);
 
-                if (celula) {
+                const valores =
+                    new Set();
 
-                    const valor = celula.textContent.trim();
 
-                    if (valor !== "") {
-                        valores.add(valor);
+                linhas.forEach(function (linha) {
+
+                    const celula =
+                        linha.cells[coluna];
+
+                    if (celula) {
+
+                        const valor =
+                            celula.textContent.trim();
+
+                        if (valor !== "") {
+                            valores.add(valor);
+                        }
                     }
-                }
-            });
 
-            Array.from(valores)
-                .sort()
-                .forEach(function (valor) {
-
-                    const option =
-                        document.createElement("option");
-
-                    option.value = valor;
-                    option.textContent = valor;
-
-                    filtro.appendChild(option);
                 });
 
 
-            filtro.addEventListener("change", aplicarFiltros);
+                Array.from(valores)
+                    .sort()
+                    .forEach(function (valor) {
 
-        });
+                        const option =
+                            document.createElement("option");
 
-    });
+                        option.value =
+                            valor;
 
+                        option.textContent =
+                            valor;
+
+                        filtro.appendChild(
+                            option
+                        );
+
+                    });
+
+
+                filtro.addEventListener(
+                    "change",
+                    aplicarFiltros
+                );
+
+            });
+
+        }
+    );
+
+
+    /* =========================================
+       APLICAR FILTROS
+    ========================================= */
 
     function aplicarFiltros() {
 
         const tabela =
             document.getElementById("historicoTabela");
+
+        if (!tabela) {
+            return;
+        }
 
         const linhas =
             tabela.querySelectorAll("tbody tr");
@@ -329,7 +872,9 @@
 
         linhas.forEach(function (linha) {
 
-            let mostrar = true;
+            let mostrar =
+                true;
+
 
             filtros.forEach(function (filtro) {
 
@@ -343,14 +888,22 @@
                 const coluna =
                     parseInt(filtro.dataset.column);
 
+                const celula =
+                    linha.cells[coluna];
+
+                if (!celula) {
+                    mostrar = false;
+                    return;
+                }
+
                 const valorCelula =
-                    linha.cells[coluna]
-                        .textContent
-                        .trim();
+                    celula.textContent.trim();
+
 
                 if (valorCelula !== valorSelecionado) {
                     mostrar = false;
                 }
+
             });
 
 
@@ -362,20 +915,82 @@
     }
 
 
+    /* =========================================
+       LIMPAR FILTROS
+    ========================================= */
+
     function limparFiltros() {
 
         const filtros =
             document.querySelectorAll(".filter-select");
 
         filtros.forEach(function (filtro) {
-            filtro.value = "";
+
+            filtro.value =
+                "";
+
         });
 
         aplicarFiltros();
+    }
+
+
+    /* =========================================
+       EDITAR JUSTIFICATIVA
+    ========================================= */
+
+    function editarJustificativa(id) {
+
+        const visualizacao =
+            document.getElementById(
+                "visualizacao-" + id
+            );
+
+        const edicao =
+            document.getElementById(
+                "edicao-" + id
+            );
+
+        if (visualizacao) {
+            visualizacao.style.display =
+                "none";
+        }
+
+        if (edicao) {
+            edicao.style.display =
+                "flex";
+        }
+    }
+
+
+    /* =========================================
+       CANCELAR EDIÇÃO
+    ========================================= */
+
+    function cancelarEdicao(id) {
+
+        const visualizacao =
+            document.getElementById(
+                "visualizacao-" + id
+            );
+
+        const edicao =
+            document.getElementById(
+                "edicao-" + id
+            );
+
+        if (edicao) {
+            edicao.style.display =
+                "none";
+        }
+
+        if (visualizacao) {
+            visualizacao.style.display =
+                "block";
+        }
     }
 
 </script>
 
 </body>
 </html>
-

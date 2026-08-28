@@ -35,9 +35,6 @@ public class ProducaoService {
 
     public Optional<OrdemProducao> buscarPorOp(String numeroOp) {
 
-        /*
-         * Primeiro procura a OP na tabela principal.
-         */
         Optional<OrdemProducao> ordemExistente =
                 ordemRepository.findByNumeroOp(numeroOp);
 
@@ -45,11 +42,6 @@ public class ProducaoService {
             return ordemExistente;
         }
 
-
-        /*
-         * Se ainda não existir na tabela principal,
-         * procura na base importada do OPCENTER.
-         */
         Optional<OpBase> opBase =
                 opBaseService.buscarPorOp(numeroOp);
 
@@ -61,13 +53,17 @@ public class ProducaoService {
 
             ordem.setNumeroOp(base.getOp());
 
-            ordem.setCodigoProduto(base.getProduto());
+            ordem.setCodigoProduto(
+                    base.getProduto()
+            );
 
             ordem.setDescricaoProduto(
                     base.getDescricaoProduto()
             );
 
-            ordem.setLote(base.getLote());
+            ordem.setLote(
+                    base.getLote()
+            );
 
             ordem.setStatusOp(
                     base.getStatusOp()
@@ -77,7 +73,9 @@ public class ProducaoService {
                     base.getDataHoraCriacao()
             );
 
-            ordem.setOrigemDados("OPCENTER");
+            ordem.setOrigemDados(
+                    "OPCENTER"
+            );
 
             return Optional.of(ordem);
         }
@@ -112,15 +110,13 @@ public class ProducaoService {
         HistoricoProducao historico =
                 new HistoricoProducao();
 
-        /*
-         * Vincula o registro à OP.
-         */
-        historico.setOrdemProducao(ordem);
+        historico.setOrdemProducao(
+                ordem
+        );
 
-        /*
-         * Informações da nova etapa.
-         */
-        historico.setEtapa(etapa);
+        historico.setEtapa(
+                etapa
+        );
 
         historico.setStatusProcesso(
                 statusProcesso
@@ -138,18 +134,10 @@ public class ProducaoService {
                 observacao
         );
 
-        /*
-         * A data e hora são registradas
-         * automaticamente.
-         */
         historico.setDataHoraRegistro(
                 LocalDateTime.now()
         );
 
-        /*
-         * Salva o registro na tabela
-         * historico_producao.
-         */
         return historicoRepository.save(
                 historico
         );
@@ -178,5 +166,54 @@ public class ProducaoService {
 
         return historicoRepository
                 .findAllByOrderByDataHoraRegistroDesc();
+    }
+
+
+    /* =====================================
+       SALVAR JUSTIFICATIVA DO SUPERVISOR
+    ===================================== */
+
+    public HistoricoProducao salvarJustificativaSupervisor(
+            Long historicoId,
+            String justificativa,
+            String supervisor) {
+
+        HistoricoProducao historico =
+                historicoRepository
+                        .findById(historicoId)
+                        .orElseThrow(
+                                () -> new IllegalArgumentException(
+                                        "Registro de histórico não encontrado."
+                                )
+                        );
+
+        /*
+         * Como a justificativa deve ser utilizada
+         * para registros abandonados, impedimos
+         * justificativa em outros status.
+         */
+        if (!"Abandonado".equalsIgnoreCase(
+                historico.getStatusProcesso())) {
+
+            throw new IllegalStateException(
+                    "A justificativa do supervisor só pode ser registrada para OPs abandonadas."
+            );
+        }
+
+        historico.setJustificativaSupervisor(
+                justificativa
+        );
+
+        historico.setSupervisorResponsavel(
+                supervisor
+        );
+
+        historico.setDataHoraJustificativa(
+                LocalDateTime.now()
+        );
+
+        return historicoRepository.save(
+                historico
+        );
     }
 }
