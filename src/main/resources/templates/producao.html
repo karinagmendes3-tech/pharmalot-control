@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Produção - Controle de Lotes Opcenter</title>
+
     <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 
@@ -29,80 +31,79 @@
 
     </aside>
 
+
     <main class="content">
 
         <h1>Produção</h1>
 
         <p>
-            Busque uma OP para preencher automaticamente os dados disponíveis.
+            Registro e acompanhamento das Ordens de Produção.
         </p>
 
+
         <!-- MENSAGEM DE SUCESSO -->
+
         <div th:if="${sucesso}" class="alert-success">
             <span th:text="${sucesso}"></span>
         </div>
 
-        <!-- ============================= -->
-        <!-- BUSCA DA OP -->
-        <!-- ============================= -->
 
-        <form action="/producao/buscar" method="get">
+        <!-- MENSAGEM DE OP NÃO ENCONTRADA -->
 
-            <label for="buscaNumeroOp">
-                Número da OP
-            </label>
-
-            <input
-                    id="buscaNumeroOp"
-                    type="text"
-                    name="numeroOp"
-                    placeholder="Digite o número da OP"
-                    required
-            >
-
-            <button type="submit">
-                Buscar OP
-            </button>
-
-        </form>
-
-
-        <!-- ============================= -->
-        <!-- RESULTADO DA BUSCA -->
-        <!-- ============================= -->
-
-        <div th:if="${ordem != null}">
-
-            <p th:if="${encontrada}">
-                OP encontrada na base.
+        <div th:if="${encontrada == false}">
+            <p>
+                OP não encontrada na base.
+                Preencha os dados manualmente.
             </p>
-
-            <p th:if="${encontrada == false}">
-                OP não encontrada. Preencha os dados manualmente.
-            </p>
+        </div>
 
 
-            <!-- ============================= -->
-            <!-- FORMULÁRIO DE PRODUÇÃO -->
-            <!-- ============================= -->
+        <!-- ============================= -->
+        <!-- DADOS DA OP -->
+        <!-- ============================= -->
 
-            <form action="/producao/salvar" method="post">
+        <section>
 
-                <!-- DADOS DA OP -->
-
-                <h2>Dados da OP</h2>
+            <h2>Dados da Ordem de Produção</h2>
 
 
-                <label for="numeroOp">
-                    OP
+            <!-- BUSCA DA OP -->
+
+            <form action="/producao/buscar"
+                  method="get">
+
+                <label for="numeroOpBusca">
+                    Número da OP
                 </label>
 
                 <input
-                        id="numeroOp"
+                        id="numeroOpBusca"
                         name="numeroOp"
                         type="text"
-                        th:value="${ordem.numeroOp}"
+                        th:value="${ordem != null ? ordem.numeroOp : ''}"
+                        placeholder="Digite o número da OP"
                         required
+                >
+
+                <button type="submit">
+                    Buscar OP
+                </button>
+
+            </form>
+
+
+            <!-- FORMULÁRIO DE SALVAMENTO -->
+
+            <form action="/producao/salvar"
+                  method="post">
+
+
+                <!-- Mantém a OP encontrada -->
+
+                <input
+                        type="hidden"
+                        name="numeroOp"
+                        th:value="${ordem != null ? ordem.numeroOp : ''}"
                 >
 
 
@@ -114,7 +115,7 @@
                         id="codigoProduto"
                         name="codigoProduto"
                         type="text"
-                        th:value="${ordem.codigoProduto}"
+                        th:value="${ordem != null ? ordem.codigoProduto : ''}"
                 >
 
 
@@ -126,7 +127,7 @@
                         id="descricaoProduto"
                         name="descricaoProduto"
                         type="text"
-                        th:value="${ordem.descricaoProduto}"
+                        th:value="${ordem != null ? ordem.descricaoProduto : ''}"
                 >
 
 
@@ -138,7 +139,7 @@
                         id="lote"
                         name="lote"
                         type="text"
-                        th:value="${ordem.lote}"
+                        th:value="${ordem != null ? ordem.lote : ''}"
                 >
 
 
@@ -150,7 +151,7 @@
                         id="statusOp"
                         name="statusOp"
                         type="text"
-                        th:value="${ordem.statusOp}"
+                        th:value="${ordem != null ? ordem.statusOp : ''}"
                 >
 
 
@@ -267,7 +268,7 @@
 
             </form>
 
-        </div>
+        </section>
 
     </main>
 
