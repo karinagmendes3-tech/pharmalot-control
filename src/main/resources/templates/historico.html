@@ -4,7 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Histórico - Controle de Lotes Opcenter</title>
+
     <link rel="stylesheet" href="/css/dashboard.css">
+
+    <style>
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .history-table th,
+        .history-table td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .history-table th {
+            background: #f8fafc;
+            color: #123b7a;
+            font-weight: 700;
+        }
+
+        .filter-select {
+            display: block;
+            width: 100%;
+            margin-top: 8px;
+            padding: 6px 8px;
+            border: 1px solid #d0d5dd;
+            border-radius: 6px;
+            background: white;
+            font-size: 12px;
+        }
+
+        .history-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 14px;
+        }
+
+        .clear-filters {
+            border: none;
+            background: #0d47a1;
+            color: white;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .clear-filters:hover {
+            background: #08367d;
+        }
+
+        .status-abandonado {
+            font-weight: 700;
+            color: #b42318;
+        }
+
+        .status-andamento {
+            font-weight: 700;
+            color: #175cd3;
+        }
+
+        .status-concluido {
+            font-weight: 700;
+            color: #067647;
+        }
+    </style>
 </head>
 
 <body>
@@ -35,8 +104,17 @@
         <h1>Histórico de Produção</h1>
 
         <p>
-            Consulte os registros de produção salvos no sistema.
+            Consulte e filtre os registros de produção salvos no sistema.
         </p>
+
+        <div class="history-toolbar">
+            <button
+                    type="button"
+                    class="clear-filters"
+                    onclick="limparFiltros()">
+                Limpar filtros
+            </button>
+        </div>
 
         <div th:if="${#lists.isEmpty(registros)}">
             <p>Nenhum registro encontrado.</p>
@@ -44,59 +122,129 @@
 
         <div th:if="${!#lists.isEmpty(registros)}">
 
-            <table>
+            <table class="history-table" id="historicoTabela">
 
                 <thead>
+
                 <tr>
-                    <th>Data / Hora</th>
-                    <th>OP</th>
-                    <th>Produto</th>
-                    <th>Lote</th>
-                    <th>Etapa</th>
-                    <th>Status</th>
-                    <th>Desvios</th>
-                    <th>Operador</th>
-                    <th>Observação / Motivo</th>
+
+                    <th>
+                        Data / Hora
+                        <select class="filter-select" data-column="0">
+                            <option value="">Todos</option>
+                        </select>
+                    </th>
+
+                    <th>
+                        OP
+                        <select class="filter-select" data-column="1">
+                            <option value="">Todas</option>
+                        </select>
+                    </th>
+
+                    <th>
+                        Produto
+                        <select class="filter-select" data-column="2">
+                            <option value="">Todos</option>
+                        </select>
+                    </th>
+
+                    <th>
+                        Lote
+                        <select class="filter-select" data-column="3">
+                            <option value="">Todos</option>
+                        </select>
+                    </th>
+
+                    <th>
+                        Etapa
+                        <select class="filter-select" data-column="4">
+                            <option value="">Todas</option>
+                        </select>
+                    </th>
+
+                    <th>
+                        Status
+                        <select class="filter-select" data-column="5">
+                            <option value="">Todos</option>
+                        </select>
+                    </th>
+
+                    <th>
+                        Desvios
+                        <select class="filter-select" data-column="6">
+                            <option value="">Todos</option>
+                        </select>
+                    </th>
+
+                    <th>
+                        Operador
+                        <select class="filter-select" data-column="7">
+                            <option value="">Todos</option>
+                        </select>
+                    </th>
+
+                    <th>
+                        Observação / Motivo
+                        <select class="filter-select" data-column="8">
+                            <option value="">Todas</option>
+                        </select>
+                    </th>
+
                 </tr>
+
                 </thead>
 
                 <tbody>
 
                 <tr th:each="registro : ${registros}">
 
-                    <td th:text="${#temporals.format(registro.dataHoraRegistro, 'dd/MM/yyyy HH:mm')}">
+                    <td
+                            th:text="${#temporals.format(registro.dataHoraRegistro, 'dd/MM/yyyy HH:mm')}">
                         Data
                     </td>
 
-                    <td th:text="${registro.ordemProducao.numeroOp}">
+                    <td
+                            th:text="${registro.ordemProducao.numeroOp}">
                         OP
                     </td>
 
-                    <td th:text="${registro.ordemProducao.descricaoProduto}">
+                    <td
+                            th:text="${registro.ordemProducao.descricaoProduto}">
                         Produto
                     </td>
 
-                    <td th:text="${registro.ordemProducao.lote}">
+                    <td
+                            th:text="${registro.ordemProducao.lote}">
                         Lote
                     </td>
 
-                    <td th:text="${registro.etapa}">
+                    <td
+                            th:text="${registro.etapa}">
                         Etapa
                     </td>
 
-                    <td th:text="${registro.statusProcesso}">
+                    <td
+                            th:text="${registro.statusProcesso}"
+                            th:classappend="
+                                ${registro.statusProcesso == 'Abandonado'} ? 'status-abandonado' :
+                                (${registro.statusProcesso == 'Concluído'} ? 'status-concluido' :
+                                (${registro.statusProcesso == 'Em andamento'} ? 'status-andamento' : ''))">
                         Status
                     </td>
 
-                    <td th:text="${registro.quantidadeDesvios}">
+                    <td
+                            th:text="${registro.quantidadeDesvios}">
                         0
                     </td>
 
-                    <td th:text="${registro.operador}">
+                    <td
+                            th:text="${registro.operador}">
                         Operador
                     </td>
 
-                    <td th:text="${registro.observacao}">
+                    <td
+                            th:text="${registro.observacao}">
                         Observação
                     </td>
 
@@ -111,6 +259,122 @@
     </main>
 
 </div>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const tabela = document.getElementById("historicoTabela");
+
+        if (!tabela) {
+            return;
+        }
+
+        const linhas = tabela.querySelectorAll("tbody tr");
+        const filtros = tabela.querySelectorAll(".filter-select");
+
+        filtros.forEach(function (filtro) {
+
+            const coluna = parseInt(filtro.dataset.column);
+
+            const valores = new Set();
+
+            linhas.forEach(function (linha) {
+
+                const celula = linha.cells[coluna];
+
+                if (celula) {
+
+                    const valor = celula.textContent.trim();
+
+                    if (valor !== "") {
+                        valores.add(valor);
+                    }
+                }
+            });
+
+            Array.from(valores)
+                .sort()
+                .forEach(function (valor) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value = valor;
+                    option.textContent = valor;
+
+                    filtro.appendChild(option);
+                });
+
+
+            filtro.addEventListener("change", aplicarFiltros);
+
+        });
+
+    });
+
+
+    function aplicarFiltros() {
+
+        const tabela =
+            document.getElementById("historicoTabela");
+
+        const linhas =
+            tabela.querySelectorAll("tbody tr");
+
+        const filtros =
+            tabela.querySelectorAll(".filter-select");
+
+
+        linhas.forEach(function (linha) {
+
+            let mostrar = true;
+
+            filtros.forEach(function (filtro) {
+
+                const valorSelecionado =
+                    filtro.value;
+
+                if (valorSelecionado === "") {
+                    return;
+                }
+
+                const coluna =
+                    parseInt(filtro.dataset.column);
+
+                const valorCelula =
+                    linha.cells[coluna]
+                        .textContent
+                        .trim();
+
+                if (valorCelula !== valorSelecionado) {
+                    mostrar = false;
+                }
+            });
+
+
+            linha.style.display =
+                mostrar ? "" : "none";
+
+        });
+
+    }
+
+
+    function limparFiltros() {
+
+        const filtros =
+            document.querySelectorAll(".filter-select");
+
+        filtros.forEach(function (filtro) {
+            filtro.value = "";
+        });
+
+        aplicarFiltros();
+    }
+
+</script>
 
 </body>
 </html>
